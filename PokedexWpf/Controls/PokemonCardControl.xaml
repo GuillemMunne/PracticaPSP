@@ -1,0 +1,35 @@
+<UserControl x:Class="PokedexWpf.Controls.PokemonCardControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:models="clr-namespace:PokedexWpf.Models"
+             Height="120" Width="240">
+  <Border Background="#FF2E2E2E" CornerRadius="12" Padding="12">
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+      <Border Background="#FFE53935" Width="64" Height="64" CornerRadius="32" VerticalAlignment="Top">
+        <TextBlock Text="PK" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+      </Border>
+      <StackPanel Grid.Column="1" Margin="12,0,0,0">
+        <TextBlock Text="{Binding Pokemon.Code}" Foreground="#FFBDBDBD" FontSize="12" />
+        <TextBlock Text="{Binding Pokemon.Name}" FontSize="16" FontWeight="Bold" Foreground="White" />
+        <ItemsControl ItemsSource="{Binding Pokemon.Types}">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="{x:Type models:PokemonType}">
+              <Border Background="#FF4CAF50" CornerRadius="8" Padding="6,2" Margin="0,4,4,0">
+                <TextBlock Text="{Binding Name}" Foreground="White" FontSize="12" />
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Grid>
+  </Border>
+</UserControl>
