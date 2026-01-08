@@ -1,8 +1,8 @@
 <Window x:Class="PokedexWpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:PokedexWpf.Controls;assembly=PokedexWpf"
-        xmlns:views="clr-namespace:PokedexWpf.Views;assembly=PokedexWpf"
+        xmlns:controls="clr-namespace:PokedexWpf.Controls"
+        xmlns:views="clr-namespace:PokedexWpf.Views"
         Title="PokeDex" Height="720" Width="1280" Background="#FF1E1E1E">
   <Grid>
     <Grid.RowDefinitions>
