@@ -1,0 +1,118 @@
+<UserControl x:Class="PokedexWpf.Views.PokemonEditView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:PokedexWpf.Controls"
+             xmlns:ac="clr-namespace:DotNetKit.Wpf.AutoCompleteComboBox;assembly=DotNetKit.Wpf.AutoCompleteComboBox"
+             Background="#FF212121">
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="16">
+      <TextBlock Text="Edició de Pokemon" FontSize="20" FontWeight="Bold" Foreground="White" />
+
+      <GroupBox Header="Dades bàsiques" Margin="0,12,0,0">
+        <Grid Margin="8">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+
+          <StackPanel>
+            <TextBlock Text="Nom" Foreground="White" />
+            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+          </StackPanel>
+
+          <StackPanel Grid.Column="1" Margin="12,0,0,0">
+            <TextBlock Text="Codi" Foreground="White" />
+            <TextBox Text="{Binding Code, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+          </StackPanel>
+
+          <StackPanel Grid.Row="1">
+            <TextBlock Text="Alçada (m)" Foreground="White" />
+            <TextBox Text="{Binding Height, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+          </StackPanel>
+
+          <StackPanel Grid.Row="1" Grid.Column="1" Margin="12,0,0,0">
+            <TextBlock Text="Pes (kg)" Foreground="White" />
+            <TextBox Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+          </StackPanel>
+
+          <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+            <TextBlock Text="Descripció" Foreground="White" />
+            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" Height="60" TextWrapping="Wrap" AcceptsReturn="True" />
+          </StackPanel>
+        </Grid>
+      </GroupBox>
+
+      <GroupBox Header="Tipus" Margin="0,12,0,0">
+        <StackPanel Margin="8">
+          <StackPanel Orientation="Horizontal">
+            <ComboBox ItemsSource="{Binding AvailableTypes}" SelectedItem="{Binding SelectedType}" Width="160" />
+            <Button Content="Afegir" Margin="8,0,0,0" Command="{Binding AddTypeCommand}" />
+            <Button Content="Eliminar" Margin="8,0,0,0" Command="{Binding RemoveTypeCommand}" />
+          </StackPanel>
+          <ListBox ItemsSource="{Binding SelectedTypes}" SelectedItem="{Binding SelectedAssignedType}" Height="80" />
+        </StackPanel>
+      </GroupBox>
+
+      <GroupBox Header="Habilitats" Margin="0,12,0,0">
+        <StackPanel Margin="8">
+          <StackPanel Orientation="Horizontal">
+            <ac:AutoCompleteComboBox Width="200" ItemsSource="{Binding AvailableAbilities}" SelectedItem="{Binding SelectedAbility}" IsEditable="True" />
+            <Button Content="Afegir" Margin="8,0,0,0" Command="{Binding AddAbilityCommand}" />
+            <Button Content="Eliminar" Margin="8,0,0,0" Command="{Binding RemoveAbilityCommand}" />
+          </StackPanel>
+          <ListBox ItemsSource="{Binding SelectedAbilities}" Height="80" />
+        </StackPanel>
+      </GroupBox>
+
+      <GroupBox Header="Evolucions" Margin="0,12,0,0">
+        <StackPanel Margin="8">
+          <StackPanel Orientation="Horizontal">
+            <ac:AutoCompleteComboBox Width="200" ItemsSource="{Binding AvailableEvolutions}" SelectedItem="{Binding SelectedEvolution}" IsEditable="True" />
+            <Button Content="Afegir" Margin="8,0,0,0" Command="{Binding AddEvolutionCommand}" />
+            <Button Content="Eliminar" Margin="8,0,0,0" Command="{Binding RemoveEvolutionCommand}" />
+            <Button Content="↑" Margin="8,0,0,0" Command="{Binding MoveEvolutionUpCommand}" />
+            <Button Content="↓" Margin="4,0,0,0" Command="{Binding MoveEvolutionDownCommand}" />
+          </StackPanel>
+          <ItemsControl ItemsSource="{Binding Evolutions}" Margin="0,8,0,0">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <controls:EvolutionBubbleControl Pokemon="{Binding}" Margin="0,0,8,8" />
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </GroupBox>
+
+      <GroupBox Header="Estadístiques" Margin="0,12,0,0">
+        <StackPanel Margin="8">
+          <controls:StatSliderControl Label="HP" Value="{Binding Hp, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+          <controls:StatSliderControl Label="Attack" Value="{Binding Attack, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+          <controls:StatSliderControl Label="Defense" Value="{Binding Defense, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+          <controls:StatSliderControl Label="Sp. Attack" Value="{Binding SpecialAttack, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+          <controls:StatSliderControl Label="Sp. Defense" Value="{Binding SpecialDefense, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+          <controls:StatSliderControl Label="Speed" Value="{Binding Speed, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}" />
+        </StackPanel>
+      </GroupBox>
+
+      <GroupBox Header="Defense modifiers" Margin="0,12,0,0" IsEnabled="False">
+        <ItemsControl ItemsSource="{Binding DefenseModifiers}" Margin="8">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <controls:DamageModifierBlockControl ModifierLabel="{Binding ModifierLabel}" Types="{Binding Types}" />
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </GroupBox>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

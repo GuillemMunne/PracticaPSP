@@ -1,0 +1,69 @@
+<Window x:Class="PokedexWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:PokedexWpf.Controls"
+        xmlns:views="clr-namespace:PokedexWpf.Views"
+        Title="PokeDex" Height="720" Width="1280" Background="#FF1E1E1E">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <Border Background="#FF2C2C2C" Padding="16">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="2*" />
+          <ColumnDefinition Width="2*" />
+          <ColumnDefinition Width="2*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+          <TextBlock Text="Codi" Foreground="White" />
+          <TextBox Text="{Binding FilterCode, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="12,0,0,0">
+          <TextBlock Text="Nom" Foreground="White" />
+          <TextBox Text="{Binding FilterName, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel Grid.Column="2" Margin="12,0,0,0">
+          <TextBlock Text="Tipus" Foreground="White" />
+          <ComboBox ItemsSource="{Binding Types}" SelectedItem="{Binding FilterType}" />
+        </StackPanel>
+        <StackPanel Grid.Column="3" Margin="12,0,0,0" VerticalAlignment="Bottom">
+          <Button Content="Netejar filtres" Command="{Binding ClearFiltersCommand}" />
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="2*" />
+        <ColumnDefinition Width="3*" />
+      </Grid.ColumnDefinitions>
+
+      <Grid Grid.Column="0" Margin="16">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+          <Button Content="Nou" Command="{Binding NewPokemonCommand}" />
+          <Button Content="Eliminar" Margin="8,0,0,0" Command="{Binding DeletePokemonCommand}" />
+          <Button Content="Desar" Margin="8,0,0,0" Command="{Binding SavePokemonCommand}" />
+        </StackPanel>
+        <ListView Grid.Row="1" ItemsSource="{Binding FilteredPokemon}" SelectedItem="{Binding SelectedPokemon}" Background="Transparent" BorderBrush="Transparent">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <controls:PokemonCardControl Pokemon="{Binding}" Margin="0,0,0,12" />
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </Grid>
+
+      <Border Grid.Column="1" Margin="16" Background="#FF212121" CornerRadius="12">
+        <views:PokemonEditView DataContext="{Binding Editor}" />
+      </Border>
+    </Grid>
+  </Grid>
+</Window>

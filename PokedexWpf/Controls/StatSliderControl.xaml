@@ -1,0 +1,15 @@
+<UserControl x:Class="PokedexWpf.Controls.StatSliderControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="36">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
+    <TextBlock Text="{Binding Label, RelativeSource={RelativeSource AncestorType=UserControl}}" VerticalAlignment="Center" Margin="0,0,8,0" Foreground="White" />
+    <Slider Grid.Column="1" Minimum="1" Maximum="255" Value="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+    <TextBlock Grid.Column="2" Text="{Binding Value, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="8,0,0,0" Foreground="White" />
+  </Grid>
+</UserControl>
